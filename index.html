@@ -14,6 +14,7 @@
             --dark-color: #333;
             --font-main: 'Noto Sans SC', sans-serif;
             --font-title: 'SimSun', serif;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
         * {
@@ -113,7 +114,7 @@
         /* 首页英雄区域 */
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://example.com/museum-bg.jpg') no-repeat center center/cover;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://picsum.photos/id/1076/1920/1080') no-repeat center center/cover;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -152,6 +153,7 @@
             font-weight: bold;
             transition: all 0.3s;
             border: 2px solid var(--accent-color);
+            cursor: pointer;
         }
         
         .btn:hover {
@@ -180,10 +182,27 @@
             z-index: 1;
         }
         
-        /* 特色文物展示 */
-        .featured {
+        /* 通用区块样式 */
+        section {
             padding: 5rem 2rem;
+        }
+        
+        .white-bg {
             background-color: white;
+        }
+        
+        .light-bg {
+            background-color: var(--light-color);
+        }
+        
+        .primary-bg {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
         
         .section-title {
@@ -199,6 +218,10 @@
             display: inline-block;
         }
         
+        .primary-bg .section-title h2 {
+            color: white;
+        }
+        
         .section-title h2::after {
             content: '';
             position: absolute;
@@ -210,6 +233,7 @@
             transform: translateX(-50%);
         }
         
+        /* 特色文物展示 */
         .artifacts-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -222,7 +246,7 @@
             background-color: var(--light-color);
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow);
             transition: transform 0.3s, box-shadow 0.3s;
         }
         
@@ -286,9 +310,6 @@
         
         /* 百万工程专区 */
         .million-project {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 5rem 2rem;
             position: relative;
             overflow: hidden;
         }
@@ -300,18 +321,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('https://example.com/pattern.png');
+            background: url('https://picsum.photos/id/1040/1920/1080');
             opacity: 0.05;
             z-index: 1;
         }
         
-        .million-project .section-title h2 {
-            color: white;
-        }
-        
         .project-container {
-            max-width: 1200px;
-            margin: 0 auto;
             position: relative;
             z-index: 2;
         }
@@ -384,16 +399,6 @@
         }
         
         /* 新闻中心 */
-        .news {
-            padding: 5rem 2rem;
-            background-color: white;
-        }
-        
-        .news-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
         .news-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -403,7 +408,7 @@
         .news-card {
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow);
             transition: all 0.3s;
         }
         
@@ -475,15 +480,243 @@
             transform: translateX(5px);
         }
         
-        /* 联系我们 */
-        .contact {
-            padding: 5rem 2rem;
-            background-color: var(--light-color);
+        /* 新增功能样式 - 表单通用 */
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
         }
         
-        .contact-container {
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: var(--font-main);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .form-submit {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .form-submit:hover {
+            background: var(--secondary-color);
+        }
+        
+        .form-message {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .form-message.success {
+            display: block;
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .form-message.error {
+            display: block;
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        /* 文物检索 */
+        .search-container {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            display: flex;
+            gap: 1rem;
+        }
+        
+        #artifactSearch {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        #searchBtn {
+            padding: 0.8rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        #searchBtn:hover {
+            background: var(--secondary-color);
+        }
+        
+        .search-results {
             max-width: 1200px;
             margin: 0 auto;
+            display: none;
+        }
+        
+        .search-results.active {
+            display: block;
+        }
+        
+        /* 留言板 */
+        .message-board {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .message-list {
+            margin-bottom: 2rem;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .message-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-bottom: 1rem;
+        }
+        
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .message-author {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .message-date {
+            font-size: 0.8rem;
+            color: #999;
+        }
+        
+        .message-content {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        
+        .message-reply {
+            background: var(--light-color);
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+        }
+        
+        .reply-label {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        /* 参观预约 */
+        .booking-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .booking-option {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .booking-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .booking-option.active {
+            border-color: var(--accent-color);
+            background: rgba(212, 175, 55, 0.05);
+        }
+        
+        .booking-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        /* 虚拟体验 */
+        .vr-experience {
+            background: linear-gradient(rgba(26, 75, 140, 0.8), rgba(193, 43, 43, 0.8)), url('https://picsum.photos/id/1059/1920/1080') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+        
+        .vr-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-family: var(--font-title);
+        }
+        
+        .vr-desc {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        /* 联系我们 */
+        .contact-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 3rem;
@@ -532,7 +765,7 @@
             height: 400px;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow);
         }
         
         .contact-map iframe {
@@ -549,8 +782,6 @@
         }
         
         .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
@@ -624,6 +855,55 @@
             font-size: 0.9rem;
         }
         
+        /* 模态框 */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(-20px);
+            transition: transform 0.3s;
+        }
+        
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        
         /* 响应式设计 */
         @media (max-width: 992px) {
             .project-stats {
@@ -679,6 +959,14 @@
             .section-title h2 {
                 font-size: 2rem;
             }
+            
+            .vr-title {
+                font-size: 2rem;
+            }
+            
+            .vr-desc {
+                font-size: 1rem;
+            }
         }
         
         @media (max-width: 576px) {
@@ -698,8 +986,16 @@
                 font-size: 2rem;
             }
             
-            .featured, .million-project, .news, .contact {
+            section {
                 padding: 3rem 1rem;
+            }
+            
+            .form-container {
+                padding: 1.5rem 1rem;
+            }
+            
+            .search-container {
+                flex-direction: column;
             }
         }
     </style>
@@ -720,12 +1016,14 @@
             <nav id="mainNav">
                 <ul>
                     <li><a href="#home">首页</a></li>
-                    <li><a href="#about">关于我们</a></li>
+                    <li><a href="#featured">馆藏珍品</a></li>
                     <li><a href="#project">百千万工程</a></li>
                     <li><a href="#news">新闻中心</a></li>
-                    <li><a href="#contact">联系我们</a></li>
-                    <li><a href="#register">注册</a></li>
+                    <li><a href="#booking">参观预约</a></li>
+                    <li><a href="#search">文物检索</a></li>
                     <li><a href="#message">留言板</a></li>
+                    <li><a href="#volunteer">志愿者报名</a></li>
+                    <li><a href="#contact">联系我们</a></li>
                 </ul>
             </nav>
         </div>
@@ -738,56 +1036,56 @@
             <h1>探索遂溪千年文化瑰宝</h1>
             <p>海上丝绸之路的重要见证，唐代至近代文物的数字典藏</p>
             <div class="hero-buttons">
-                <a href="#featured" class="btn">探索文物</a>
-                <a href="#virtual-tour" class="btn btn-outline">虚拟游览</a>
+                <a href="#booking" class="btn">立即预约</a>
+                <a href="#vr-experience" class="btn btn-outline">虚拟体验</a>
             </div>
         </div>
     </section>
 
     <!-- 特色文物展示 -->
-    <section class="featured" id="featured">
+    <section class="featured white-bg" id="featured">
         <div class="section-title">
             <h2>馆藏珍品</h2>
         </div>
         <div class="artifacts-grid">
             <div class="artifact-card">
                 <div class="artifact-img">
-                    <img src="images\2.png" alt="唐代金器">
+                    <img src="https://picsum.photos/id/175/800/600" alt="唐代金器">
                 </div>
                 <div class="artifact-info">
                     <h3>唐代鎏金鹦鹉纹银碗</h3>
                     <span class="era">唐代</span>
                     <p>出土于遂溪县唐代遗址，展现了盛唐时期精湛的金银器制作工艺和中外文化交流的见证。</p>
-                    <a href="#" class="view-details">查看详情 <i class="fas fa-arrow-right"></i></a>
+                    <a href="#" class="view-details" onclick="openModal('artifact1')">查看详情 <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
             <div class="artifact-card">
                 <div class="artifact-img">
-                    <img src="images\3.jpg" alt="宋代瓷器">
+                    <img src="https://picsum.photos/id/242/800/600" alt="宋代瓷器">
                 </div>
                 <div class="artifact-info">
                     <h3>宋代青白釉刻花瓷瓶</h3>
                     <span class="era">宋代</span>
                     <p>遂溪窑烧制的典型器物，釉色青白，刻花精美，反映了宋代海上贸易的繁荣景象。</p>
-                    <a href="#" class="view-details">查看详情 <i class="fas fa-arrow-right"></i></a>
+                    <a href="#" class="view-details" onclick="openModal('artifact2')">查看详情 <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
             <div class="artifact-card">
                 <div class="artifact-img">
-                    <img src="images\4.jpeg" alt="明代铜器">
+                    <img src="https://picsum.photos/id/200/800/600" alt="明代铜器">
                 </div>
                 <div class="artifact-info">
                     <h3>明代海水云龙纹铜镜</h3>
                     <span class="era">明代</span>
                     <p>镜背铸有精细的海水云龙纹饰，体现了明代铜器铸造工艺的高超水平和海洋文化元素。</p>
-                    <a href="#" class="view-details">查看详情 <i class="fas fa-arrow-right"></i></a>
+                    <a href="#" class="view-details" onclick="openModal('artifact3')">查看详情 <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- 百万工程专区 -->
-    <section class="million-project" id="project">
+    <section class="million-project primary-bg" id="project">
         <div class="project-container">
             <div class="section-title">
                 <h2>百万数字工程</h2>
@@ -817,7 +1115,7 @@
                     </div>
                     <h3>虚拟修复体验</h3>
                     <p>通过WebXR技术，让用户在线参与文物虚拟修复过程，体验考古工作者的工作内容。</p>
-                    <a href="#" class="btn btn-outline">立即体验</a>
+                    <a href="#vr-experience" class="btn btn-outline">立即体验</a>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
@@ -825,7 +1123,7 @@
                     </div>
                     <h3>微观细节探索</h3>
                     <p>高精度扫描技术捕捉文物微观细节，放大至100倍仍清晰可见的纹饰和工艺痕迹。</p>
-                    <a href="#" class="btn btn-outline">查看示例</a>
+                    <a href="#" class="btn btn-outline" onclick="openModal('microDetail')">查看示例</a>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
@@ -833,155 +1131,371 @@
                     </div>
                     <h3>文物知识图谱</h3>
                     <p>构建文物关联知识网络，展示不同文物间的历史联系和文化脉络。</p>
-                    <a href="#" class="btn btn-outline">探索图谱</a>
+                    <a href="#" class="btn btn-outline" onclick="openModal('knowledgeMap')">探索图谱</a>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- 虚拟体验区 -->
+    <section class="vr-experience" id="vr-experience">
+        <h2 class="vr-title">沉浸式虚拟博物馆体验</h2>
+        <p class="vr-desc">足不出户，身临其境感受遂溪千年文化魅力。360°全景展厅、文物3D模型、AR互动讲解，让文物活起来。</p>
+        <a href="#" class="btn">进入虚拟展厅</a>
+    </section>
+
     <!-- 新闻中心 -->
-    <section class="news" id="news">
-        <div class="news-container">
+    <section class="news white-bg" id="news">
+        <div class="container">
             <div class="section-title">
                 <h2>新闻动态</h2>
             </div>
             <div class="news-grid">
                 <div class="news-card">
                     <div class="news-img">
-                        <img src="images\6.jpg" alt="新闻图片">
+                        <img src="https://picsum.photos/id/1071/800/500" alt="新闻图片">
                     </div>
                     <div class="news-content">
                         <span class="news-date">2025-07-15</span>
                         <h3>"海上丝路与遂溪"特展即将开幕</h3>
                         <p>本次展览将展出近年来新发现的唐代至清代海上贸易相关文物120件，其中30件为首次公开展出...</p>
-                        <a href="#" class="read-more">阅读更多 <i class="fas fa-arrow-right"></i></a>
+                        <a href="#" class="read-more" onclick="openModal('news1')">阅读更多 <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
                 <div class="news-card">
                     <div class="news-img">
-                        <img src="images\9.png" alt="新闻图片">
+                        <img src="https://picsum.photos/id/1073/800/500" alt="新闻图片">
                     </div>
                     <div class="news-content">
                         <span class="news-date">2025-05-24</span>
                         <h3>2025年遂溪县博物馆首届青年讲解员培训开班仪式啦！</h3>
                         <p>为进一步充实遂溪县博物馆讲解员队伍，更好地传承和弘扬遂溪优秀的历史文化...</p>
-                        <a href="#" class="read-more">阅读更多 <i class="fas fa-arrow-right"></i></a>
+                        <a href="#" class="read-more" onclick="openModal('news2')">阅读更多 <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
                 <div class="news-card">
                     <div class="news-img">
-                        <img src="images\65.png" alt="新闻图片">
+                        <img src="https://picsum.photos/id/1080/800/500" alt="新闻图片">
                     </div>
                     <div class="news-content">
                         <span class="news-date">2025-05-13</span>
                         <h3>专家鉴宝，陶艺制作！遂溪县博物馆带来新体验→</h3>
                         <p>为加强文物保护利用，传承弘扬中华优秀文化，扎实推进遂溪县文化兴城重要战略部署...</p>
-                        <a href="#" class="read-more">阅读更多 <i class="fas fa-arrow-right"></i></a>
+                        <a href="#" class="read-more" onclick="openModal('news3')">阅读更多 <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 联系我们 -->
-    <section class="contact" id="contact">
-        <div class="contact-container">
-            <div class="contact-info">
-                <h3>联系我们</h3>
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-map-marker-alt"></i>
+    <!-- 参观预约 -->
+    <section class="booking light-bg" id="booking">
+        <div class="container">
+            <div class="section-title">
+                <h2>参观预约</h2>
+            </div>
+            <div class="booking-options">
+                <div class="booking-option" id="individualBooking" onclick="selectBookingType('individual')">
+                    <div class="booking-icon">
+                        <i class="fas fa-user"></i>
                     </div>
-                    <div class="contact-text">
-                        <h4>地址</h4>
-                        <p>广东省湛江市遂溪县遂城镇博物馆路1号</p>
-                    </div>
+                    <h3>个人预约</h3>
+                    <p>单人/散客参观预约</p>
                 </div>
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-phone-alt"></i>
+                <div class="booking-option" id="groupBooking" onclick="selectBookingType('group')">
+                    <div class="booking-icon">
+                        <i class="fas fa-users"></i>
                     </div>
-                    <div class="contact-text">
-                        <h4>电话</h4>
-                        <p><a href="tel:+867592123456">0759-2123456</a></p>
-                    </div>
+                    <h3>团体预约</h3>
+                    <p>10人以上团体参观/讲解预约</p>
                 </div>
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-envelope"></i>
+                <div class="booking-option" id="specialBooking" onclick="selectBookingType('special')">
+                    <div class="booking-icon">
+                        <i class="fas fa-wheelchair"></i>
                     </div>
-                    <div class="contact-text">
-                        <h4>邮箱</h4>
-                        <p><a href="mailto:info@suiximuseum.com">info@suiximuseum.com</a></p>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="contact-text">
-                        <h4>开放时间</h4>
-                        <p>周二至周日 9:00-17:00 (周一闭馆)</p>
-                    </div>
+                    <h3>特殊预约</h3>
+                    <p>无障碍服务/研学活动预约</p>
                 </div>
             </div>
-            <div class="contact-map">
-                <iframe src="images\640.jpg" allowfullscreen></iframe>
+            <div class="form-container">
+                <form id="bookingForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="name">姓名</label>
+                            <input type="text" class="form-control" id="name" required placeholder="请输入您的姓名">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="phone">联系电话</label>
+                            <input type="tel" class="form-control" id="phone" required placeholder="请输入您的手机号码">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="date">预约日期</label>
+                            <input type="date" class="form-control" id="date" required min="">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="time">预约时段</label>
+                            <select class="form-control" id="time" required>
+                                <option value="">请选择时段</option>
+                                <option value="09:00-11:00">09:00-11:00</option>
+                                <option value="11:00-13:00">11:00-13:00</option>
+                                <option value="13:00-15:00">13:00-15:00</option>
+                                <option value="15:00-17:00">15:00-17:00</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" id="groupNumber" style="display: none;">
+                        <label class="form-label" for="number">团体人数</label>
+                        <input type="number" class="form-control" id="number" placeholder="请输入团体人数（10人以上）" min="10">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="remark">备注说明</label>
+                        <textarea class="form-control" id="remark" placeholder="请输入特殊需求或备注信息"></textarea>
+                    </div>
+                    <button type="submit" class="form-submit">提交预约</button>
+                    <div class="form-message" id="bookingMessage"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 文物检索 -->
+    <section class="search white-bg" id="search">
+        <div class="container">
+            <div class="section-title">
+                <h2>文物检索</h2>
+            </div>
+            <div class="search-container">
+                <input type="text" id="artifactSearch" placeholder="请输入文物名称/年代/类型关键词检索">
+                <button id="searchBtn" class="btn">检索</button>
+            </div>
+            <div class="search-results" id="searchResults">
+                <div class="artifacts-grid">
+                    <!-- 检索结果会通过JS动态生成 -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 留言板 -->
+    <section class="message light-bg" id="message">
+        <div class="container">
+            <div class="section-title">
+                <h2>留言板</h2>
+            </div>
+            <div class="message-board">
+                <div class="form-container" style="margin-bottom: 2rem;">
+                    <form id="messageForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="msgName">姓名</label>
+                                <input type="text" class="form-control" id="msgName" required placeholder="请输入您的姓名">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="msgPhone">联系电话</label>
+                                <input type="tel" class="form-control" id="msgPhone" required placeholder="请输入您的手机号码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="msgContent">留言内容</label>
+                            <textarea class="form-control" id="msgContent" required placeholder="请输入您的留言内容"></textarea>
+                        </div>
+                        <button type="submit" class="form-submit">提交留言</button>
+                        <div class="form-message" id="msgMessage"></div>
+                    </form>
+                </div>
+                <div class="message-list" id="messageList">
+                    <!-- 留言列表会通过JS动态生成 -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 志愿者报名 -->
+    <section class="volunteer white-bg" id="volunteer">
+        <div class="container">
+            <div class="section-title">
+                <h2>志愿者报名</h2>
+            </div>
+            <div class="form-container">
+                <form id="volunteerForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="volName">姓名</label>
+                            <input type="text" class="form-control" id="volName" required placeholder="请输入您的姓名">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="volPhone">联系电话</label>
+                            <input type="tel" class="form-control" id="volPhone" required placeholder="请输入您的手机号码">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="volAge">年龄</label>
+                            <input type="number" class="form-control" id="volAge" required placeholder="请输入您的年龄" min="18" max="65">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="volEmail">电子邮箱</label>
+                            <input type="email" class="form-control" id="volEmail" required placeholder="请输入您的电子邮箱">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="volType">意向服务类型</label>
+                        <select class="form-control" id="volType" required>
+                            <option value="">请选择服务类型</option>
+                            <option value="讲解">讲解员</option>
+                            <option value="引导">展厅引导</option>
+                            <option value="教育">教育活动协助</option>
+                            <option value="文创">文创产品推广</option>
+                            <option value="其他">其他服务</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="volTime">可服务时间</label>
+                        <input type="text" class="form-control" id="volTime" required placeholder="例如：周末全天/工作日下午等">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="volIntro">个人简介/相关经历</label>
+                        <textarea class="form-control" id="volIntro" placeholder="请简要介绍您的相关经历或特长"></textarea>
+                    </div>
+                    <button type="submit" class="form-submit">提交报名</button>
+                    <div class="form-message" id="volMessage"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section class="contact light-bg" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>联系我们</h2>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>联系信息</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>地址</h4>
+                            <p>广东省湛江市遂溪县遂城镇博物馆路1号</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>电话</h4>
+                            <p><a href="tel:+867592123456">0759-2123456</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>邮箱</h4>
+                            <p><a href="mailto:info@suiximuseum.com">info@suiximuseum.com</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>开放时间</h4>
+                            <p>周二至周日 9:00-17:00 (周一闭馆)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-map">
+                    <iframe src="https://picsum.photos/id/1015/800/600" allowfullscreen></iframe>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- 页脚 -->
     <footer>
-        <div class="footer-container">
-            <div class="footer-col">
-                <h3>快速链接</h3>
-                <ul>
-                    <li><a href="#home">首页</a></li>
-                    <li><a href="#about">关于我们</a></li>
-                    <li><a href="#project">百万工程</a></li>
-                    <li><a href="#news">新闻中心</a></li>
-                    <li><a href="#contact">联系我们</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h3>服务</h3>
-                <ul>
-                    <li><a href="#">参观预约</a></li>
-                    <li><a href="#">团体接待</a></li>
-                    <li><a href="#">学术研究</a></li>
-                    <li><a href="#">文物鉴定</a></li>
-                    <li><a href="#">志愿者招募</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h3>资源</h3>
-                <ul>
-                    <li><a href="#">数字馆藏</a></li>
-                    <li><a href="#">出版物</a></li>
-                    <li><a href="#">研究资料</a></li>
-                    <li><a href="#">教育材料</a></li>
-                    <li><a href="#">3D模型下载</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h3>关注我们</h3>
-                <p>订阅我们的电子通讯，获取最新展览和活动信息</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-weixin"></i></a>
-                    <a href="#"><i class="fab fa-weibo"></i></a>
-                    <a href="#"><i class="fab fa-qq"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>快速链接</h3>
+                    <ul>
+                        <li><a href="#home">首页</a></li>
+                        <li><a href="#featured">馆藏珍品</a></li>
+                        <li><a href="#project">百万工程</a></li>
+                        <li><a href="#news">新闻中心</a></li>
+                        <li><a href="#contact">联系我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>服务</h3>
+                    <ul>
+                        <li><a href="#booking">参观预约</a></li>
+                        <li><a href="#volunteer">志愿者招募</a></li>
+                        <li><a href="#search">文物检索</a></li>
+                        <li><a href="#">学术研究</a></li>
+                        <li><a href="#">文物鉴定</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>资源</h3>
+                    <ul>
+                        <li><a href="#">数字馆藏</a></li>
+                        <li><a href="#">出版物</a></li>
+                        <li><a href="#">研究资料</a></li>
+                        <li><a href="#">教育材料</a></li>
+                        <li><a href="#">3D模型下载</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>关注我们</h3>
+                    <p>订阅我们的电子通讯，获取最新展览和活动信息</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2023 遂溪县博物馆 版权所有 | 粤ICP备12345678号</p>
+            <div class="copyright">
+                <p>&copy; 2025 遂溪县博物馆 版权所有 | 粤ICP备12345678号</p>
+            </div>
         </div>
     </footer>
 
+    <!-- 模态框 -->
+    <div class="modal" id="modal">
+        <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+        <div class="modal-content" id="modalContent">
+            <!-- 模态框内容会通过JS动态生成 -->
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
+        // 初始化日期选择器（最小日期为今天）
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateInput = document.getElementById('date');
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.min = today;
+            
+            // 初始化留言板
+            initMessageBoard();
+            
+            // 初始化文物检索
+            initSearch();
+            
+            // 初始化预约类型选择
+            document.getElementById('individualBooking').classList.add('active');
+        });
+
         // 移动端菜单切换
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mainNav = document.getElementById('mainNav');
@@ -1073,6 +1587,424 @@
         }, { threshold: 0.5 });
         
         observer.observe(document.querySelector('.million-project'));
+
+        // 预约类型选择
+        function selectBookingType(type) {
+            // 移除所有active类
+            document.querySelectorAll('.booking-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            
+            // 添加active类
+            if (type === 'individual') {
+                document.getElementById('individualBooking').classList.add('active');
+                document.getElementById('groupNumber').style.display = 'none';
+            } else if (type === 'group') {
+                document.getElementById('groupBooking').classList.add('active');
+                document.getElementById('groupNumber').style.display = 'block';
+            } else if (type === 'special') {
+                document.getElementById('specialBooking').classList.add('active');
+                document.getElementById('groupNumber').style.display = 'none';
+            }
+        }
+
+        // 预约表单提交
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            
+            // 模拟提交成功
+            const message = document.getElementById('bookingMessage');
+            message.className = 'form-message success';
+            message.textContent = `预约提交成功！${name}您好，我们已收到您${date} ${time}的参观预约，工作人员将尽快与您联系（${phone}）。`;
+            
+            // 重置表单
+            this.reset();
+            
+            // 3秒后隐藏提示
+            setTimeout(() => {
+                message.textContent = '';
+                message.className = 'form-message';
+            }, 5000);
+        });
+
+        // 留言板初始化
+        function initMessageBoard() {
+            // 从localStorage读取留言
+            let messages = JSON.parse(localStorage.getItem('museumMessages')) || [
+                {
+                    name: '张先生',
+                    date: '2025-07-01',
+                    content: '请问博物馆的特展需要单独购票吗？',
+                    reply: '您好！我馆所有展览均免费向公众开放，无需购票，只需提前预约即可参观。'
+                },
+                {
+                    name: '李老师',
+                    date: '2025-06-28',
+                    content: '想组织学生来博物馆开展研学活动，需要提前多久预约？',
+                    reply: '您好！团体研学活动建议提前7个工作日预约，我们会安排专业讲解员提供服务。'
+                }
+            ];
+            
+            // 渲染留言列表
+            renderMessages(messages);
+            
+            // 留言表单提交
+            document.getElementById('messageForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const msgName = document.getElementById('msgName').value;
+                const msgPhone = document.getElementById('msgPhone').value;
+                const msgContent = document.getElementById('msgContent').value;
+                
+                // 创建新留言
+                const newMessage = {
+                    name: msgName,
+                    date: new Date().toISOString().split('T')[0],
+                    content: msgContent,
+                    reply: ''
+                };
+                
+                // 添加到数组
+                messages.push(newMessage);
+                
+                // 保存到localStorage
+                localStorage.setItem('museumMessages', JSON.stringify(messages));
+                
+                // 重新渲染
+                renderMessages(messages);
+                
+                // 提示成功
+                const msgMessage = document.getElementById('msgMessage');
+                msgMessage.className = 'form-message success';
+                msgMessage.textContent = '留言提交成功！我们会尽快回复您。';
+                
+                // 重置表单
+                this.reset();
+                
+                // 3秒后隐藏提示
+                setTimeout(() => {
+                    msgMessage.textContent = '';
+                    msgMessage.className = 'form-message';
+                }, 5000);
+            });
+        }
+
+        // 渲染留言列表
+        function renderMessages(messages) {
+            const messageList = document.getElementById('messageList');
+            messageList.innerHTML = '';
+            
+            messages.forEach(msg => {
+                const messageItem = document.createElement('div');
+                messageItem.className = 'message-item';
+                
+                messageItem.innerHTML = `
+                    <div class="message-header">
+                        <span class="message-author">${msg.name}</span>
+                        <span class="message-date">${msg.date}</span>
+                    </div>
+                    <div class="message-content">${msg.content}</div>
+                    ${msg.reply ? `
+                        <div class="message-reply">
+                            <span class="reply-label">管理员回复：</span>
+                            ${msg.reply}
+                        </div>
+                    ` : ''}
+                `;
+                
+                messageList.appendChild(messageItem);
+            });
+        }
+
+        // 志愿者报名表单提交
+        document.getElementById('volunteerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const volName = document.getElementById('volName').value;
+            
+            // 模拟提交成功
+            const volMessage = document.getElementById('volMessage');
+            volMessage.className = 'form-message success';
+            volMessage.textContent = `${volName}您好！您的志愿者报名已提交成功，我们将在3个工作日内与您联系。`;
+            
+            // 重置表单
+            this.reset();
+            
+            // 3秒后隐藏提示
+            setTimeout(() => {
+                volMessage.textContent = '';
+                volMessage.className = 'form-message';
+            }, 5000);
+        });
+
+        // 文物检索初始化
+        function initSearch() {
+            // 模拟文物数据
+            const artifacts = [
+                {
+                    name: '唐代鎏金鹦鹉纹银碗',
+                    era: '唐代',
+                    desc: '出土于遂溪县唐代遗址，展现了盛唐时期精湛的金银器制作工艺和中外文化交流的见证。',
+                    img: 'https://picsum.photos/id/175/800/600'
+                },
+                {
+                    name: '宋代青白釉刻花瓷瓶',
+                    era: '宋代',
+                    desc: '遂溪窑烧制的典型器物，釉色青白，刻花精美，反映了宋代海上贸易的繁荣景象。',
+                    img: 'https://picsum.photos/id/242/800/600'
+                },
+                {
+                    name: '明代海水云龙纹铜镜',
+                    era: '明代',
+                    desc: '镜背铸有精细的海水云龙纹饰，体现了明代铜器铸造工艺的高超水平和海洋文化元素。',
+                    img: 'https://picsum.photos/id/200/800/600'
+                },
+                {
+                    name: '清代青花缠枝莲纹瓷盘',
+                    era: '清代',
+                    desc: '典型的清代外销瓷器，纹饰精美，是海上丝绸之路贸易的重要物证。',
+                    img: 'https://picsum.photos/id/188/800/600'
+                }
+            ];
+            
+            // 检索按钮点击事件
+            document.getElementById('searchBtn').addEventListener('click', function() {
+                const searchText = document.getElementById('artifactSearch').value.toLowerCase();
+                
+                // 过滤文物
+                const results = artifacts.filter(artifact => 
+                    artifact.name.toLowerCase().includes(searchText) || 
+                    artifact.era.toLowerCase().includes(searchText) ||
+                    artifact.desc.toLowerCase().includes(searchText)
+                );
+                
+                // 显示结果
+                const searchResults = document.getElementById('searchResults');
+                searchResults.classList.add('active');
+                
+                // 渲染结果
+                const resultsGrid = searchResults.querySelector('.artifacts-grid');
+                resultsGrid.innerHTML = '';
+                
+                if (results.length === 0) {
+                    resultsGrid.innerHTML = '<div style="text-align:center; padding:2rem;">未找到相关文物，请更换关键词重试</div>';
+                    return;
+                }
+                
+                results.forEach(artifact => {
+                    const card = document.createElement('div');
+                    card.className = 'artifact-card';
+                    
+                    card.innerHTML = `
+                        <div class="artifact-img">
+                            <img src="${artifact.img}" alt="${artifact.name}">
+                        </div>
+                        <div class="artifact-info">
+                            <h3>${artifact.name}</h3>
+                            <span class="era">${artifact.era}</span>
+                            <p>${artifact.desc}</p>
+                            <a href="#" class="view-details" onclick="openModal('searchResult')">查看详情 <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    `;
+                    
+                    resultsGrid.appendChild(card);
+                });
+            });
+        }
+
+        // 模态框操作
+        function openModal(type) {
+            const modal = document.getElementById('modal');
+            const modalContent = document.getElementById('modalContent');
+            
+            // 根据类型设置不同内容
+            switch(type) {
+                case 'artifact1':
+                    modalContent.innerHTML = `
+                        <h2 style="color:var(--primary-color); margin-bottom:1rem;">唐代鎏金鹦鹉纹银碗</h2>
+                        <img src="https://picsum.photos/id/175/800/600" alt="唐代鎏金鹦鹉纹银碗" style="width:100%; border-radius:5px; margin-bottom:1rem;">
+                        <p style="line-height:1.8;">这件银碗出土于遂溪县唐代沉船遗址，碗身通体鎏金，内壁饰有鹦鹉纹，外壁为缠枝花卉纹。鹦鹉纹是唐代丝绸之路中外文化交流的典型纹饰，反映了当时与西域乃至波斯地区的文化往来。银碗制作工艺精湛，采用了锤揲、鎏金、錾刻等多种技法，是唐代南方沿海地区对外贸易的重要物证。</p>
+                    `;
+                    break;
+                case 'artifact2':
+                    modalContent.innerHTML = `
+                        <h2 style="color:var(--primary-color); margin-bottom:1rem;">宋代青白釉刻花瓷瓶</h2>
+                        <img src="https://picsum.photos/id/242/800/600" alt="宋代青白釉刻花瓷瓶" style="width:100%; border-radius:5px; margin-bottom:1rem;">
+                        <p style="line-height:1.8;">该瓷瓶为宋代遂溪窑的代表性器物，高32厘米，口径8厘米，底径10厘米。釉色青白相间，俗称"影青"，瓶身刻有缠枝牡丹纹，刀法流畅，纹饰生动。遂溪窑是宋代广东重要的外销瓷窑口，其产品通过海上丝绸之路远销东南亚、南亚等地，这件瓷瓶是研究宋代海上贸易的重要实物资料。</p>
+                    `;
+                    break;
+                case 'artifact3':
+                    modalContent.innerHTML = `
+                        <h2 style="color:var(--primary-color); margin-bottom:1rem;">明代海水云龙纹铜镜</h2>
+                        <img src="https://picsum.photos/id/200
+                                        modalContent.innerHTML = `
+                        <h2 style="color:var(--primary-color); margin-bottom:1rem;">明代海水云龙纹铜镜</h2>
+                        <img src="https://picsum.photos/id/200/800/600" alt="明代海水云龙纹铜镜" style="width:100%; border-radius:5px; margin-bottom:1rem;">
+                        <p style="line-height:1.8;">这面铜镜直径18厘米，镜背铸有高浮雕海水云龙纹，龙身矫健，穿梭于祥云与波涛之间，象征皇权与祥瑞。镜钮为半球形，周围装饰莲瓣纹。铜镜制作于明代中期，体现了当时铜器铸造的高超技艺，也反映了遂溪地区作为海上贸易港口，金属工艺品的流通与文化交流。</p>
+                    `;
+                    break;
+                case 'microDetail':
+                    modalContent.innerHTML = `
+                        <h2 style="color:var(--primary-color); margin-bottom:1rem;">文物微观细节</h2>
+                        <img src="https://picsum.photos/id/306/800/600" alt="微观细节" style="width:100%; border-radius:5px; margin-bottom:1rem;">
+                        <p style="line-height:1.8;">通过高精度3D扫描技术，我们能够捕捉到文物表面的微观细节。这张图片展示了唐代银碗表面放大50倍后的纹饰细节，可以看到工匠的錾刻痕迹、鎏金工艺的细微变化，以及千年氧化形成的独特包浆。这些微观信息对于文物研究、真伪鉴定和修复工作具有重要价值。</p>
+                    `;
+                    break;
+                case 'knowledgeMap':
+                    modalContent.innerHTML = `
+                        <h2 style="color:var(--primary-color); margin-bottom:1rem;">文物知识图谱</h2>
+                        <img src="https://picsum.photos/id/1039/800/600" alt="知识图谱" style="width:100%; border-radius:5px; margin-bottom:1rem;">
+                        <p style="line-height:1.8;">我们构建的文物知识图谱展示了不同文物之间的历史联系。以唐代鎏金鹦鹉纹银碗为中心，图谱展示了其工艺来源、相关历史事件、出土地点、同类文物分布等信息。通过这张网络图，观众可以更直观地理解文物在历史长河中的位置和价值，以及海上丝绸之路带来的文化交流网络。</p>
+                    `;
+                    break;
+                case 'news1':
+                    modalContent.innerHTML = `
+                        <h2 style="color:var(--primary-color); margin-bottom:1rem;">"海上丝路与遂溪"特展即将开幕</h2>
+                        <img src="https://picsum.photos/id/1071/800/500" alt="特展海报" style="width:100%; border-radius:5px; margin-bottom:1rem;">
+                        <p style="line-height:1.8;">为庆祝遂溪县博物馆新馆落成一周年，我馆将于2025年8月15日至11月15日举办"海上丝路与遂溪"特别展览。</p>
+                        <p style="line-height:1.8; margin-top:1rem;">本次展览汇集了近年来遂溪地区出土的唐代至清代海上贸易相关文物120件（套），其中包括首次公开展出的30件珍贵文物。展览分为"唐代港口的兴起"、"宋元贸易的繁荣"、"明清海禁与私贸"三个单元，通过文物、文献、多媒体等多种形式，全面展示遂溪在海上丝绸之路上的历史地位和文化交流成果。</p>
+                        <p style="line-height:1.8; margin-top:1rem;">展览期间还将举办系列学术讲座、文物修复现场演示、传统手工艺体验等活动。</p>
+                    `;
+                    break;
+                case 'news2':
+                    modalContent.innerHTML = `
+                        <h2 style="color:var(--primary-color); margin-bottom:1rem;">2025年遂溪县博物馆首届青年讲解员培训开班仪式</h2>
+                        <img src="https://picsum.photos/id/1073/800/500" alt="培训开班" style="width:100%; border-radius:5px; margin-bottom:1rem;">
+                        <p style="line-height:1.8;">5月24日，遂溪县博物馆首届青年讲解员培训班开班仪式在博物馆学术报告厅举行。来自全县各中小学的50名青年教师和学生志愿者参加了开班仪式。</p>
+                        <p style="line-height:1.8; margin-top:1rem;">博物馆馆长在开班致辞中表示："讲解员是连接观众与文物的桥梁，培养一支专业、热情的讲解员队伍，对于传承遂溪历史文化、提升博物馆服务水平具有重要意义。"</p>
+                        <p style="line-height:1.8; margin-top:1rem;">本期培训班为期一个月，课程涵盖遂溪历史文化、文物知识、讲解技巧、礼仪规范等内容。培训结束后，考核合格的学员将获得博物馆颁发的讲解员证书，并定期在博物馆开展志愿讲解服务。</p>
+                    `;
+                    break;
+                case 'news3':
+                    modalContent.innerHTML = `
+                        <h2 style="color:var(--primary-color); margin-bottom:1rem;">专家鉴宝，陶艺制作！遂溪县博物馆带来新体验</h2>
+                        <img src="https://picsum.photos/id/1080/800/500" alt="活动体验" style="width:100%; border-radius:5px; margin-bottom:1rem;">
+                        <p style="line-height:1.8;">5月13日，遂溪县博物馆举办了"文化遗产日"系列体验活动，邀请文物鉴定专家和陶艺传承人，为市民带来了一场别开生面的文化体验。</p>
+                        <p style="line-height:1.8; margin-top:1rem;">活动包括两个部分：上午的"专家鉴宝"环节，由广东省文物鉴定专家为市民免费鉴定家传藏品，并提供收藏建议；下午的"陶艺制作体验"环节，观众在陶艺师的指导下，亲手制作遂溪窑风格的小型瓷器。</p>
+                        <p style="line-height:1.8; margin-top:1rem;">活动吸引了200多名市民参与，许多家长带着孩子一起体验陶艺制作。一位参与者表示："这样的活动让文物不再只是展柜里的展品，而是可以亲手触摸、体验的活历史。"</p>
+                        <p style="line-height:1.8; margin-top:1rem;">博物馆表示，未来将继续举办此类体验活动，让文物"活"起来，让博物馆成为市民文化生活的重要场所。</p>
+                    `;
+                    break;
+                case 'searchResult':
+                    modalContent.innerHTML = `
+                        <h2 style="color:var(--primary-color); margin-bottom:1rem;">文物详情</h2>
+                        <p style="line-height:1.8;">这是文物检索结果的详情页面。在实际应用中，这里会显示具体文物的详细信息，包括：</p>
+                        <ul style="line-height:1.8; margin-top:1rem; padding-left:1.5rem;">
+                            <li>文物的完整高清图片</li>
+                            <li>详细规格尺寸数据</li>
+                            <li>出土时间、地点和背景</li>
+                            <li>工艺技术分析</li>
+                            <li>历史文化价值解读</li>
+                            <li>相关研究成果链接</li>
+                            <li>3D模型查看器</li>
+                        </ul>
+                        <p style="line-height:1.8; margin-top:1rem;">您还可以通过扫描二维码或点击链接，将文物详情分享给朋友，或下载相关研究资料。</p>
+                    `;
+                    break;
+                default:
+                    modalContent.innerHTML = `<p>内容加载中...</p>`;
+            }
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // 禁止背景滚动
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // 恢复背景滚动
+        }
+
+        // 点击模态框外部关闭
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // 键盘ESC键关闭模态框
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // 表单验证功能扩展
+        function validatePhone(phone) {
+            const phoneRegex = /^1[3-9]\d{9}$/;
+            return phoneRegex.test(phone);
+        }
+
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // 为表单添加实时验证
+        document.getElementById('phone').addEventListener('blur', function() {
+            if (!validatePhone(this.value) && this.value !== '') {
+                this.style.borderColor = 'var(--secondary-color)';
+                this.setCustomValidity('请输入有效的手机号码');
+            } else {
+                this.style.borderColor = '#ddd';
+                this.setCustomValidity('');
+            }
+        });
+
+        document.getElementById('volEmail').addEventListener('blur', function() {
+            if (!validateEmail(this.value) && this.value !== '') {
+                this.style.borderColor = 'var(--secondary-color)';
+                this.setCustomValidity('请输入有效的电子邮箱');
+            } else {
+                this.style.borderColor = '#ddd';
+                this.setCustomValidity('');
+            }
+        });
+
+        // 监听预约日期变化，禁用已约满的时段
+        document.getElementById('date').addEventListener('change', function() {
+            // 这里可以添加逻辑检查某天各时段的预约情况
+            console.log('日期选择变化:', this.value);
+        });
+
+        // 搜索框回车键支持
+        document.getElementById('artifactSearch').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('searchBtn').click();
+            }
+        });
+
+        // 页面加载完成后的初始化操作
+        window.addEventListener('load', function() {
+            // 显示加载完成的提示
+            console.log('遂溪县博物馆网站加载完成');
+            
+            // 可以在这里添加更多初始化逻辑
+            // 例如：检查localStorage中的用户偏好设置
+            const userPreferences = JSON.parse(localStorage.getItem('museumPreferences')) || {};
+            
+            // 设置默认字体大小
+            if (userPreferences.fontSize) {
+                document.documentElement.style.fontSize = userPreferences.fontSize;
+            }
+        });
+
+        // 添加视差滚动效果
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.hero');
+            
+            parallaxElements.forEach(function(element) {
+                const rate = scrolled * 0.5;
+                element.style.transform = `translate3d(0, ${rate}px, 0)`;
+            });
+        });
     </script>
 </body>
 </html>
