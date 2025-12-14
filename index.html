@@ -1,633 +1,1078 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ames市房价预测模型</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>遂溪县博物馆 - 海上丝绸之路的文化瑰宝</title>
     <style>
+        /* 全局样式 */
         :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --accent-color: #e74c3c;
-            --light-color: #ecf0f1;
-            --dark-color: #2c3e50;
+            --primary-color: #1a4b8c; /* 海洋蓝 */
+            --secondary-color: #c12b2b; /* 唐代红 */
+            --accent-color: #d4af37; /* 金色 */
+            --light-color: #f5f5f5;
+            --dark-color: #333;
+            --font-main: 'Noto Sans SC', sans-serif;
+            --font-title: 'SimSun', serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #333;
+            font-family: var(--font-main);
+            color: var(--dark-color);
+            background-color: #f9f9f9;
             line-height: 1.6;
+            overflow-x: hidden;
         }
         
-        .navbar {
-            background-color: var(--primary-color);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .hero-section {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        /* 导航栏 */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            padding: 100px 0;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-family: var(--font-title);
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 2rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* 首页英雄区域 */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://example.com/museum-bg.jpg') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+            color: white;
+            margin-top: 70px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 0 2rem;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-family: var(--font-title);
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: 2px solid var(--accent-color);
+        }
+        
+        .btn:hover {
+            background-color: transparent;
+            color: var(--accent-color);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--accent-color);
+            margin-left: 1rem;
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+        }
+        
+        /* 粒子动画容器 */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        
+        /* 特色文物展示 */
+        .featured {
+            padding: 5rem 2rem;
+            background-color: white;
         }
         
         .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
             position: relative;
-            margin-bottom: 40px;
-            padding-bottom: 15px;
         }
         
-        .section-title:after {
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-family: var(--font-title);
+            color: var(--primary-color);
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
             width: 80px;
             height: 3px;
+            background-color: var(--accent-color);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .artifacts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .artifact-card {
+            background-color: var(--light-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .artifact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .artifact-img {
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .artifact-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .artifact-card:hover .artifact-img img {
+            transform: scale(1.1);
+        }
+        
+        .artifact-info {
+            padding: 1.5rem;
+        }
+        
+        .artifact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .artifact-info .era {
+            display: inline-block;
             background-color: var(--secondary-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .artifact-info p {
+            margin-bottom: 1rem;
+            color: #666;
+        }
+        
+        .view-details {
+            display: inline-block;
+            color: var(--primary-color);
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .view-details:hover {
+            color: var(--secondary-color);
+        }
+        
+        /* 百万工程专区 */
+        .million-project {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .million-project::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://example.com/pattern.png');
+            opacity: 0.05;
+            z-index: 1;
+        }
+        
+        .million-project .section-title h2 {
+            color: white;
+        }
+        
+        .project-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .project-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .stat-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .project-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
         }
         
         .feature-card {
-            border: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
-            margin-bottom: 30px;
-            height: 100%;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s;
         }
         
         .feature-card:hover {
+            background-color: rgba(255, 255, 255, 0.2);
             transform: translateY(-5px);
         }
         
         .feature-icon {
             font-size: 2.5rem;
-            color: var(--secondary-color);
-            margin-bottom: 15px;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
         }
         
-        .chart-container {
-            background: white;
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card p {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+        
+        /* 新闻中心 */
+        .news {
+            padding: 5rem 2rem;
+            background-color: white;
+        }
+        
+        .news-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .news-card {
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            padding: 20px;
-            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
         }
         
-        .prediction-form {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            padding: 30px;
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
         
-        .btn-primary {
-            background-color: var(--secondary-color);
-            border: none;
-            padding: 10px 25px;
+        .news-img {
+            height: 200px;
+            overflow: hidden;
         }
         
-        .btn-primary:hover {
-            background-color: #2980b9;
+        .news-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
         }
         
-        .result-card {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-left: 5px solid var(--secondary-color);
-            padding: 20px;
-            border-radius: 5px;
-            margin-top: 20px;
+        .news-card:hover .news-img img {
+            transform: scale(1.05);
         }
         
-        footer {
+        .news-content {
+            padding: 1.5rem;
+        }
+        
+        .news-date {
+            display: inline-block;
             background-color: var(--primary-color);
             color: white;
-            padding: 30px 0;
-            margin-top: 50px;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 0.8rem;
         }
         
-        .model-badge {
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-            margin-right: 10px;
-            margin-bottom: 10px;
+        .news-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--dark-color);
+        }
+        
+        .news-content p {
+            color: #666;
+            margin-bottom: 1.2rem;
+        }
+        
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary-color);
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .read-more:hover {
+            color: var(--secondary-color);
+        }
+        
+        .read-more i {
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .read-more:hover i {
+            transform: translateX(5px);
+        }
+        
+        /* 联系我们 */
+        .contact {
+            padding: 5rem 2rem;
+            background-color: var(--light-color);
+        }
+        
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-icon {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin-right: 1rem;
+            margin-top: 3px;
+        }
+        
+        .contact-text h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .contact-text p, .contact-text a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .contact-text a:hover {
+            color: var(--primary-color);
+        }
+        
+        .contact-map {
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-map iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 2rem 1.5rem;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent-color);
+            bottom: 0;
+            left: 0;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-col ul li a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--accent-color);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbb;
             font-size: 0.9rem;
         }
         
-        .badge-rf {
-            background-color: #e74c3c;
-            color: white;
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .project-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
         
-        .badge-xgb {
-            background-color: #3498db;
-            color: white;
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 70px);
+                background-color: var(--primary-color);
+                transition: all 0.3s ease;
+                z-index: 999;
+            }
+            
+            nav.active {
+                left: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                padding: 2rem;
+            }
+            
+            nav ul li {
+                margin: 1rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .btn {
+                padding: 0.6rem 1.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
         }
         
-        .badge-lgb {
-            background-color: #2ecc71;
-            color: white;
-        }
-        
-        .badge-ensemble {
-            background-color: #9b59b6;
-            color: white;
+        @media (max-width: 576px) {
+            .project-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .stat-item {
+                padding: 1rem;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .featured, .million-project, .news, .contact {
+                padding: 3rem 1rem;
+            }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- 导航栏 -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">Ames房价预测</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🏛️</span>
+                <span>遂溪县博物馆</span>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">项目概述</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#data">数据探索</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#models">模型介绍</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#prediction">房价预测</a>
-                    </li>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#about">关于我们</a></li>
+                    <li><a href="#project">百千万工程</a></li>
+                    <li><a href="#news">新闻中心</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                    <li><a href="#register">注册</a></li>
+                    <li><a href="#message">留言板</a></li>
                 </ul>
-            </div>
+            </nav>
         </div>
-    </nav>
+    </header>
 
-    <!-- 欢迎区域 -->
-    <section class="hero-section">
-        <div class="container">
-            <h1 class="display-4 fw-bold">Ames市房价预测模型</h1>
-            <p class="lead">基于机器学习的高级回归技术，精准预测美国爱荷华州Ames市住宅价格</p>
-            <a href="#prediction" class="btn btn-light btn-lg mt-3">立即预测</a>
-        </div>
-    </section>
-
-    <!-- 项目概述 -->
-    <section id="about" class="py-5">
-        <div class="container">
-            <h2 class="section-title text-center">项目概述</h2>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="feature-card p-4">
-                        <div class="feature-icon">📊</div>
-                        <h4>数据基础</h4>
-                        <p>基于美国爱荷华州Ames市的住宅销售数据，包含近80个房屋特征，涵盖GrLivArea、YearBuilt等数值型变量及Neighborhood、KitchenQual等类别变量。</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="feature-card p-4">
-                        <div class="feature-icon">🤖</div>
-                        <h4>建模技术</h4>
-                        <p>采用XGBoost、LightGBM和随机森林等高级回归算法，通过特征工程和模型融合技术，构建高精度房价预测模型。</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="feature-card p-4">
-                        <div class="feature-icon">🎯</div>
-                        <h4>应用价值</h4>
-                        <p>为房地产交易平台、投资者和金融机构提供精准定价参考，辅助决策制定，降低交易风险。</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="feature-card p-4">
-                        <div class="feature-icon">📈</div>
-                        <h4>评估指标</h4>
-                        <p>采用对数均方根误差(RMSLE)作为评估指标，平衡高价房与低价房的预测误差影响，确保模型评估的公平性。</p>
-                    </div>
-                </div>
+    <!-- 首页英雄区域 -->
+    <section class="hero" id="home">
+        <div id="particles-js"></div>
+        <div class="hero-content">
+            <h1>探索遂溪千年文化瑰宝</h1>
+            <p>海上丝绸之路的重要见证，唐代至近代文物的数字典藏</p>
+            <div class="hero-buttons">
+                <a href="#featured" class="btn">探索文物</a>
+                <a href="#virtual-tour" class="btn btn-outline">虚拟游览</a>
             </div>
         </div>
     </section>
 
-    <!-- 数据探索 -->
-    <section id="data" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="section-title text-center">数据探索</h2>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="chart-container">
-                        <h5 class="text-center">房价分布</h5>
-                        <canvas id="priceDistribution"></canvas>
-                    </div>
+    <!-- 特色文物展示 -->
+    <section class="featured" id="featured">
+        <div class="section-title">
+            <h2>馆藏珍品</h2>
+        </div>
+        <div class="artifacts-grid">
+            <div class="artifact-card">
+                <div class="artifact-img">
+                    <img src="images\2.png" alt="唐代金器">
                 </div>
-                <div class="col-md-6">
-                    <div class="chart-container">
-                        <h5 class="text-center">特征重要性</h5>
-                        <canvas id="featureImportance"></canvas>
-                    </div>
+                <div class="artifact-info">
+                    <h3>唐代鎏金鹦鹉纹银碗</h3>
+                    <span class="era">唐代</span>
+                    <p>出土于遂溪县唐代遗址，展现了盛唐时期精湛的金银器制作工艺和中外文化交流的见证。</p>
+                    <a href="#" class="view-details">查看详情 <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
-            <div class="row mt-4">
-                <div class="col-md-12">
-                    <div class="chart-container">
-                        <h5 class="text-center">预测值与真实值对比</h5>
-                        <canvas id="predictionVsActual"></canvas>
-                    </div>
+            <div class="artifact-card">
+                <div class="artifact-img">
+                    <img src="images\3.jpg" alt="宋代瓷器">
+                </div>
+                <div class="artifact-info">
+                    <h3>宋代青白釉刻花瓷瓶</h3>
+                    <span class="era">宋代</span>
+                    <p>遂溪窑烧制的典型器物，釉色青白，刻花精美，反映了宋代海上贸易的繁荣景象。</p>
+                    <a href="#" class="view-details">查看详情 <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="artifact-card">
+                <div class="artifact-img">
+                    <img src="images\4.jpeg" alt="明代铜器">
+                </div>
+                <div class="artifact-info">
+                    <h3>明代海水云龙纹铜镜</h3>
+                    <span class="era">明代</span>
+                    <p>镜背铸有精细的海水云龙纹饰，体现了明代铜器铸造工艺的高超水平和海洋文化元素。</p>
+                    <a href="#" class="view-details">查看详情 <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 模型介绍 -->
-    <section id="models" class="py-5">
-        <div class="container">
-            <h2 class="section-title text-center">模型介绍</h2>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="feature-card p-4 text-center">
-                        <span class="model-badge badge-rf">随机森林</span>
-                        <h5>随机森林</h5>
-                        <p>通过构建多棵决策树进行预测，具有高稳定性和抗过拟合能力，适合处理非线性关系和高维特征。</p>
-                    </div>
+    <!-- 百万工程专区 -->
+    <section class="million-project" id="project">
+        <div class="project-container">
+            <div class="section-title">
+                <h2>百万数字工程</h2>
+            </div>
+            <div class="project-stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="digitizedCount">0</div>
+                    <div class="stat-label">文物数字化</div>
                 </div>
-                <div class="col-md-3">
-                    <div class="feature-card p-4 text-center">
-                        <span class="model-badge badge-xgb">XGBoost</span>
-                        <h5>XGBoost</h5>
-                        <p>基于梯度提升的决策树算法，通过迭代优化预测误差，具有高精度和正则化特性，适合复杂特征建模。</p>
-                    </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="restoredCount">0</div>
+                    <div class="stat-label">文物修复</div>
                 </div>
-                <div class="col-md-3">
-                    <div class="feature-card p-4 text-center">
-                        <span class="model-badge badge-lgb">LightGBM</span>
-                        <h5>LightGBM</h5>
-                        <p>采用直方图算法和叶子生长策略，训练速度快且内存效率高，适合处理大规模数据集。</p>
-                    </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="visitorsCount">0</div>
+                    <div class="stat-label">线上访问</div>
                 </div>
-                <div class="col-md-3">
-                    <div class="feature-card p-4 text-center">
-                        <span class="model-badge badge-ensemble">融合模型</span>
-                        <h5>模型融合</h5>
-                        <p>结合三种算法的优势，通过加权平均策略提升预测精度和稳定性，实现最佳预测性能。</p>
-                    </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="collaboratorsCount">0</div>
+                    <div class="stat-label">合作机构</div>
                 </div>
             </div>
-            <div class="row mt-5">
-                <div class="col-md-12">
-                    <div class="chart-container">
-                        <h5 class="text-center">模型性能对比</h5>
-                        <canvas id="modelComparison"></canvas>
+            <div class="project-features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-vr-cardboard"></i>
+                    </div>
+                    <h3>虚拟修复体验</h3>
+                    <p>通过WebXR技术，让用户在线参与文物虚拟修复过程，体验考古工作者的工作内容。</p>
+                    <a href="#" class="btn btn-outline">立即体验</a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <h3>微观细节探索</h3>
+                    <p>高精度扫描技术捕捉文物微观细节，放大至100倍仍清晰可见的纹饰和工艺痕迹。</p>
+                    <a href="#" class="btn btn-outline">查看示例</a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3>文物知识图谱</h3>
+                    <p>构建文物关联知识网络，展示不同文物间的历史联系和文化脉络。</p>
+                    <a href="#" class="btn btn-outline">探索图谱</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 新闻中心 -->
+    <section class="news" id="news">
+        <div class="news-container">
+            <div class="section-title">
+                <h2>新闻动态</h2>
+            </div>
+            <div class="news-grid">
+                <div class="news-card">
+                    <div class="news-img">
+                        <img src="images\6.jpg" alt="新闻图片">
+                    </div>
+                    <div class="news-content">
+                        <span class="news-date">2025-07-15</span>
+                        <h3>"海上丝路与遂溪"特展即将开幕</h3>
+                        <p>本次展览将展出近年来新发现的唐代至清代海上贸易相关文物120件，其中30件为首次公开展出...</p>
+                        <a href="#" class="read-more">阅读更多 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <div class="news-img">
+                        <img src="images\9.png" alt="新闻图片">
+                    </div>
+                    <div class="news-content">
+                        <span class="news-date">2025-05-24</span>
+                        <h3>2025年遂溪县博物馆首届青年讲解员培训开班仪式啦！</h3>
+                        <p>为进一步充实遂溪县博物馆讲解员队伍，更好地传承和弘扬遂溪优秀的历史文化...</p>
+                        <a href="#" class="read-more">阅读更多 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <div class="news-img">
+                        <img src="images\65.png" alt="新闻图片">
+                    </div>
+                    <div class="news-content">
+                        <span class="news-date">2025-05-13</span>
+                        <h3>专家鉴宝，陶艺制作！遂溪县博物馆带来新体验→</h3>
+                        <p>为加强文物保护利用，传承弘扬中华优秀文化，扎实推进遂溪县文化兴城重要战略部署...</p>
+                        <a href="#" class="read-more">阅读更多 <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 房价预测 -->
-    <section id="prediction" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="section-title text-center">房价预测</h2>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="prediction-form">
-                        <h4 class="mb-4">输入房屋特征</h4>
-                        <form id="predictionForm">
-                            <div class="mb-3">
-                                <label for="grLivArea" class="form-label">地上居住面积 (平方英尺)  *</label>
-                                <input type="number" class="form-control" id="grLivArea" value="1500" min="500" max="5000">
-                            </div>
-                            <div class="mb-3">
-                                <label for="yearBuilt" class="form-label">建造年份  *</label>
-                                <input type="number" class="form-control" id="yearBuilt" value="1990" min="1800" max="2023">
-                            </div>
-                            <div class="mb-3">
-                                <label for="overallQual" class="form-label">整体质量评分 (1-10)  *</label>
-                                <input type="number" class="form-control" id="overallQual" value="6" min="1" max="10">
-                            </div>
-                            <div class="mb-3">
-                                <label for="neighborhood" class="form-label">所在社区  *</label>
-                                <select class="form-select" id="neighborhood">
-                                    <option value="NAmes">North Ames</option>
-                                    <option value="CollgCr">College Creek</option>
-                                    <option value="OldTown">Old Town</option>
-                                    <option value="Edwards">Edwards</option>
-                                    <option value="Somerst">Somerset</option>
-                                    <option value="NWAmes">Northwest Ames</option>
-                                    <option value="Gilbert">Gilbert</option>
-                                    <option value="Sawyer">Sawyer</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="garageArea" class="form-label">车库面积 (平方英尺)  *</label>
-                                <input type="number" class="form-control" id="garageArea" value="400" min="0" max="1500">
-                            </div>
-                            <div class="mb-3">
-                                <label for="totalBsmtSF" class="form-label">地下室总面积 (平方英尺)  *</label>
-                                <input type="number" class="form-control" id="totalBsmtSF" value="800" min="0" max="3000">
-                            </div>
-                            <div class="mb-3">
-                                <label for="fullBath" class="form-label">卫浴数量  *</label>
-                                <input type="number" class="form-control" id="fullBath" value="2" min="0" max="5">
-                            </div>
-                            <div class="mb-3">
-                                <label for="kitchenQual" class="form-label">厨房质量  *</label>
-                                <select class="form-select" id="kitchenQual">
-                                    <option value="Ex">优秀</option>
-                                    <option value="Gd">良好</option>
-                                    <option value="TA">一般/典型</option>
-                                    <option value="Fa">一般</option>
-                                </select>
-                            </div>
-                            <button type="button" class="btn btn-primary w-100" onclick="predictPrice()">预测房价</button>
-                        </form>
+    <!-- 联系我们 -->
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>联系我们</h3>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h4>地址</h4>
+                        <p>广东省湛江市遂溪县遂城镇博物馆路1号</p>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div id="predictionResult" class="prediction-form">
-                        <h4 class="mb-4">预测结果</h4>
-                        <div class="text-center py-5">
-                            <p class="lead">请输入房屋特征并点击"预测房价"按钮</p>
-                        </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h4>电话</h4>
+                        <p><a href="tel:+867592123456">0759-2123456</a></p>
                     </div>
                 </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h4>邮箱</h4>
+                        <p><a href="mailto:info@suiximuseum.com">info@suiximuseum.com</a></p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h4>开放时间</h4>
+                        <p>周二至周日 9:00-17:00 (周一闭馆)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-map">
+                <iframe src="images\640.jpg" allowfullscreen></iframe>
             </div>
         </div>
     </section>
 
     <!-- 页脚 -->
     <footer>
-        <div class="container text-center">
-            <p>Ames市房价预测模型 &copy; 2025 | 基于回归建模技术的高级房价预测系统</p>
-            <p>模型融合策略：随机森林(40%) + XGBoost(40%) + LightGBM(20%)</p>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>快速链接</h3>
+                <ul>
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#about">关于我们</a></li>
+                    <li><a href="#project">百万工程</a></li>
+                    <li><a href="#news">新闻中心</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>服务</h3>
+                <ul>
+                    <li><a href="#">参观预约</a></li>
+                    <li><a href="#">团体接待</a></li>
+                    <li><a href="#">学术研究</a></li>
+                    <li><a href="#">文物鉴定</a></li>
+                    <li><a href="#">志愿者招募</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>资源</h3>
+                <ul>
+                    <li><a href="#">数字馆藏</a></li>
+                    <li><a href="#">出版物</a></li>
+                    <li><a href="#">研究资料</a></li>
+                    <li><a href="#">教育材料</a></li>
+                    <li><a href="#">3D模型下载</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>关注我们</h3>
+                <p>订阅我们的电子通讯，获取最新展览和活动信息</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-weixin"></i></a>
+                    <a href="#"><i class="fab fa-weibo"></i></a>
+                    <a href="#"><i class="fab fa-qq"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 遂溪县博物馆 版权所有 | 粤ICP备12345678号</p>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // 模拟数据 - 实际应用中应从后端API获取
-        const priceData = [120000, 150000, 180000, 200000, 220000, 250000, 280000, 300000, 320000, 350000, 380000, 400000, 450000, 500000];
-        const featureImportance = {
-            labels: ['GrLivArea', 'OverallQual', 'GarageArea', 'TotalBsmtSF', 'YearBuilt', 'FullBath', 'Neighborhood', 'KitchenQual'],
-            data: [0.25, 0.20, 0.15, 0.12, 0.10, 0.08, 0.06, 0.04]
-        };
+        // 移动端菜单切换
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
         
-        const modelPerformance = {
-            labels: ['随机森林', 'XGBoost', 'LightGBM', '融合模型'],
-            data: [0.18, 0.15, 0.16, 0.12] // RMSLE值，值越小越好
-        };
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
         
-        // 初始化图表
-        document.addEventListener('DOMContentLoaded', function() {
-            // 房价分布图
-            const priceCtx = document.getElementById('priceDistribution').getContext('2d');
-            new Chart(priceCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['<100K', '100-150K', '150-200K', '200-250K', '250-300K', '300-350K', '350-400K', '400-450K', '450-500K', '>500K'],
-                    datasets: [{
-                        label: '房屋数量',
-                        data: [45, 120, 180, 220, 190, 130, 80, 50, 30, 20],
-                        backgroundColor: 'rgba(52, 152, 219, 0.7)',
-                        borderColor: 'rgba(52, 152, 219, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        title: {
-                            display: true,
-                            text: 'Ames市房价分布'
-                        }
-                    }
-                }
-            });
-            
-            // 特征重要性图
-            const featureCtx = document.getElementById('featureImportance').getContext('2d');
-            new Chart(featureCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: featureImportance.labels,
-                    datasets: [{
-                        data: featureImportance.data,
-                        backgroundColor: [
-                            'rgba(231, 76, 60, 0.7)',
-                            'rgba(52, 152, 219, 0.7)',
-                            'rgba(46, 204, 113, 0.7)',
-                            'rgba(155, 89, 182, 0.7)',
-                            'rgba(241, 196, 15, 0.7)',
-                            'rgba(230, 126, 34, 0.7)',
-                            'rgba(52, 73, 94, 0.7)',
-                            'rgba(149, 165, 166, 0.7)'
-                        ]
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'right'
-                        },
-                        title: {
-                            display: true,
-                            text: '特征重要性分布'
-                        }
-                    }
-                }
-            });
-            
-            // 预测值与真实值对比图
-            const predCtx = document.getElementById('predictionVsActual').getContext('2d');
-            const sampleCount = 50;
-            const actualPrices = [];
-            const predictedPrices = [];
-            
-            for (let i = 0; i < sampleCount; i++) {
-                const basePrice = 150000 + Math.random() * 300000;
-                actualPrices.push(basePrice);
-                // 预测价格有±10%的误差
-                predictedPrices.push(basePrice * (0.9 + Math.random() * 0.2));
-            }
-            
-            new Chart(predCtx, {
-                type: 'scatter',
-                data: {
-                    datasets: [{
-                        label: '预测值 vs 真实值',
-                        data: actualPrices.map((price, index) => ({
-                            x: price,
-                            y: predictedPrices[index]
-                        })),
-                        backgroundColor: 'rgba(52, 152, 219, 0.7)',
-                        pointRadius: 5
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        x: {
-                            title: {
-                                display: true,
-                                text: '真实价格 ($)'
-                            }
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                text: '预测价格 ($)'
-                            }
-                        }
-                    },
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: '预测值与真实值对比'
-                        }
-                    }
-                }
-            });
-            
-            // 模型性能对比图
-            const modelCtx = document.getElementById('modelComparison').getContext('2d');
-            new Chart(modelCtx, {
-                type: 'bar',
-                data: {
-                    labels: modelPerformance.labels,
-                    datasets: [{
-                        label: 'RMSLE (值越小越好)',
-                        data: modelPerformance.data,
-                        backgroundColor: [
-                            'rgba(231, 76, 60, 0.7)',
-                            'rgba(52, 152, 219, 0.7)',
-                            'rgba(46, 204, 113, 0.7)',
-                            'rgba(155, 89, 182, 0.7)'
-                        ]
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'RMSLE值'
-                            }
-                        }
-                    },
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: '模型性能对比'
-                        }
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                if (this.getAttribute('href') === '#') return;
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 关闭移动菜单
+                    if (mainNav.classList.contains('active')) {
+                        mainNav.classList.remove('active');
                     }
                 }
             });
         });
         
-        // 房价预测函数
-        function predictPrice() {
-            // 获取表单值
-            const grLivArea = parseInt(document.getElementById('grLivArea').value);
-            const yearBuilt = parseInt(document.getElementById('yearBuilt').value);
-            const overallQual = parseInt(document.getElementById('overallQual').value);
-            const neighborhood = document.getElementById('neighborhood').value;
-            const garageArea = parseInt(document.getElementById('garageArea').value);
-            const totalBsmtSF = parseInt(document.getElementById('totalBsmtSF').value);
-            const fullBath = parseInt(document.getElementById('fullBath').value);
-            const kitchenQual = document.getElementById('kitchenQual').value;
-            
-            // 简单预测逻辑 - 实际应用中应调用后端API
-            let basePrice = 100000;
-            
-            // 面积因素
-            basePrice += grLivArea * 50;
-            basePrice += garageArea * 30;
-            basePrice += totalBsmtSF * 20;
-            
-            // 质量因素
-            basePrice += overallQual * 10000;
-            
-            // 年份因素 (越新越贵)
-            const age = 2023 - yearBuilt;
-            basePrice -= age * 500;
-            
-            // 卫浴因素
-            basePrice += fullBath * 5000;
-            
-            // 社区因素 (简化处理)
-            const neighborhoodMultipliers = {
-                'NAmes': 1.0,
-                'CollgCr': 1.2,
-                'OldTown': 0.9,
-                'Edwards': 0.95,
-                'Somerst': 1.3,
-                'NWAmes': 1.1,
-                'Gilbert': 1.05,
-                'Sawyer': 1.0
+        // 滚动时导航栏效果
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.background = 'rgba(26, 75, 140, 0.95)';
+                header.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.2)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, var(--primary-color), var(--secondary-color))';
+                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+            }
+        });
+        
+        // 粒子动画
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#d4af37" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: { enable: true, distance: 150, color: "#d4af37", opacity: 0.4, width: 1 },
+                move: { enable: true, speed: 2, direction: "none", random: true, straight: false, out_mode: "out" }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: true, mode: "push" }
+                }
+            }
+        });
+        
+        // 数字动画
+        function animateValue(id, start, end, duration) {
+            const obj = document.getElementById(id);
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
             };
-            basePrice *= neighborhoodMultipliers[neighborhood] || 1.0;
-            
-            // 厨房质量因素
-            const kitchenQualMultipliers = {
-                'Ex': 1.2,
-                'Gd': 1.1,
-                'TA': 1.0,
-                'Fa': 0.9
-            };
-            basePrice *= kitchenQualMultipliers[kitchenQual] || 1.0;
-            
-            // 添加随机波动 (±5%)
-            const fluctuation = 0.9 + Math.random() * 0.2;
-            const finalPrice = Math.round(basePrice * fluctuation);
-            
-            // 格式化价格显示
-            const formattedPrice = finalPrice.toLocaleString('en-US', {
-                style: 'currency',
-                currency: 'USD',
-                maximumFractionDigits: 0
-            });
-            
-            // 显示结果
-            const resultDiv = document.getElementById('predictionResult');
-            resultDiv.innerHTML = `
-                <h4 class="mb-4">预测结果</h4>
-                <div class="result-card">
-                    <h3 class="text-center">${formattedPrice}</h3>
-                    <p class="text-center mb-0">基于输入特征的预测房价</p>
-                </div>
-                <div class="mt-4">
-                    <h5>模型预测详情</h5>
-                    <ul class="list-group">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            随机森林预测
-                            <span class="badge bg-danger">${Math.round(finalPrice * 0.98).toLocaleString('en-US', {style: 'currency', currency: 'USD', maximumFractionDigits: 0})}</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            XGBoost预测
-                            <span class="badge bg-primary">${Math.round(finalPrice * 1.02).toLocaleString('en-US', {style: 'currency', currency: 'USD', maximumFractionDigits: 0})}</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            LightGBM预测
-                            <span class="badge bg-success">${Math.round(finalPrice * 0.99).toLocaleString('en-US', {style: 'currency', currency: 'USD', maximumFractionDigits: 0})}</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="alert alert-info mt-3">
-                    <small>注：此预测基于历史数据建模，实际房价可能受市场波动、房屋状况等多种因素影响。</small></small>
-                </div>
-            `;
+            window.requestAnimationFrame(step);
         }
+        
+        // 当百万工程区域进入视口时触发动画
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateValue('digitizedCount', 0, 1024, 2000);
+                    animateValue('restoredCount', 0, 873, 2000);
+                    animateValue('visitorsCount', 0, 12560, 2000);
+                    animateValue('collaboratorsCount', 0, 28, 2000);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        observer.observe(document.querySelector('.million-project'));
     </script>
 </body>
 </html>
